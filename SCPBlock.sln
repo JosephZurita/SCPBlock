@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SCPBlock", "SCPBlock.csproj", "{7C28A368-DDD7-48A6-A93E-F49B70FF4055}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C28A368-DDD7-48A6-A93E-F49B70FF4055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C28A368-DDD7-48A6-A93E-F49B70FF4055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C28A368-DDD7-48A6-A93E-F49B70FF4055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C28A368-DDD7-48A6-A93E-F49B70FF4055}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {13EC6418-A8E6-4D45-BFF3-2D4BEAF3990C}
+	EndGlobalSection
+EndGlobal
