@@ -10,7 +10,7 @@
     <RootNamespace>SCPBlock</RootNamespace>
     <AssemblyName>SCPBlock</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <LangVersion>11.0</LangVersion>
+    <LangVersion>9</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
