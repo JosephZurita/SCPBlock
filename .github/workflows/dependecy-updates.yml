@@ -1,0 +1,45 @@
+name: Automated Dependency Updates
+
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+
+jobs:
+  dependencies:
+    name: Update Dependencies
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@main
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@main
+
+    - name: Tools
+      id: tools
+      run: dotnet tool install --global dotnet-outdated-tool
+
+    - name: Update
+      id: update
+      run: |
+        OUTPUT=$(dotnet outdated)
+        if [[ $OUTPUT =~ "No outdated dependencies were detected" ]]; then
+            echo "::set-output name=updated::false"
+        else
+            dotnet outdated -u
+        
+            echo "::set-output name=updated::true"
+        fi
+      shell: bash
+
+    - name: Test
+      id: test
+      if: ${{ steps.update.outputs.updated == 'true' }}
+      run: msbuild SCPBlock.sln -t:rebuild -property:Configuration=Release
+
+    - name: Push
+      id: push
+      if: ${{ steps.update.outputs.updated == 'true' }}
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Automated Dependency Updates
