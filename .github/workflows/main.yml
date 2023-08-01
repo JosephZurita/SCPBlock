@@ -1,8 +1,5 @@
 name: CI
 on: push
-env:
-  EXILED_REFERENCES_URL: https://www.exiled.host/build_deps/Master.zip
-  EXILED_REFERENCES_PATH: ${{ github.workspace }}/References
 jobs:
   build:
     runs-on: windows-latest
@@ -14,12 +11,6 @@ jobs:
 
     - name: Setup NuGet
       uses: NuGet/setup-nuget@main
-      
-    - name: Get references
-      shell: pwsh
-      run: |
-        Invoke-WebRequest -Uri ${{ env.EXILED_REFERENCES_URL }} -OutFile ${{ github.workspace }}/References.zip
-        Expand-Archive -Path References.zip -DestinationPath ${{ env.EXILED_REFERENCES_PATH }}
         
     - name: Restore Packages
       run: nuget restore SCPBlock.sln
