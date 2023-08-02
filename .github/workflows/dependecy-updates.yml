@@ -33,8 +33,7 @@ jobs:
     - name: Update
       id: update
       run: |
-        dotnet add package EXILED -v 7.2
-        dotnet list package
+        dotnet add package EXILED
       shell: bash
 
     - name: Test
