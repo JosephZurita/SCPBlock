@@ -30,7 +30,7 @@ jobs:
       id: update
       run: |
         Get-PackageSource
-        Find-PackageProvider -Name "Nuget" | Install-PackageProvider -Verbose
+        Install-Package -name EXILED -InstallUpdate -Force
       shell: pwsh
 
     - name: Test
