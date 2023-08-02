@@ -33,7 +33,7 @@ jobs:
     - name: Update
       id: update
       run: |
-        OUTPUT=$(dotnet outdated SCPBlock.sln)
+        OUTPUT=$(dotnet outdated)
         if [[ $OUTPUT =~ "No outdated dependencies were detected" ]]; then
             echo "pkgupdated=false" >> "$GITHUB_OUTPUT"
         else
