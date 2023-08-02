@@ -31,7 +31,8 @@ jobs:
       run: |
         dotnet restore
         dotnet list package
-        dotnet add package EXILED -v 7.2.0
+        dotnet add package EXILED -v 7.2.0 -n
+        dotnet restore --force --force-evaluate
         dotnet list package
         dotnet list reference
       shell: bash
