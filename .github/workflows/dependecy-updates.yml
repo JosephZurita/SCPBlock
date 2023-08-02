@@ -32,19 +32,11 @@ jobs:
 
     - name: Update
       id: update
-      run: |
-        OUTPUT=$(dotnet outdated)
-        if [[ $OUTPUT =~ "No outdated dependencies were detected" ]]; then
-            echo "pkgupdated=false" >> "$GITHUB_OUTPUT"
-        else
-            dotnet add package EXILED -v 7.2
-            echo "pkgupdated=true" >> "$GITHUB_OUTPUT"
-        fi
-      shell: bash
+      run: Update-Package
+      shell: pwsh
 
     - name: Test
       id: test
-      if: ${{ steps.update.outputs.pkgupdated == 'true' }}
       run: |
         msbuild SCPBlock.sln -r
         msbuild SCPBlock.sln -t:clean -p:Configuration=Release
