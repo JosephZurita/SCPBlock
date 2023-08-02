@@ -31,8 +31,8 @@ jobs:
       run: |
         dotnet restore
         dotnet list package
-        dotnet remove package EXILED
         dotnet add package EXILED -v 7.2.0
+        dotnet list package 
       shell: bash
 
     - name: Test
