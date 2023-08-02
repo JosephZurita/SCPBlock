@@ -2,7 +2,7 @@ name: CI
 on: 
   push:
     paths-ignore:
-      - '.github'
+      - '.github/**'
 jobs:
   build:
     runs-on: windows-latest
