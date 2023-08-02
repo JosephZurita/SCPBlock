@@ -32,7 +32,10 @@ jobs:
 
     - name: Update
       id: update
-      run: Update-Package
+      run: |
+        Import-Module PackageManagement.Cmdlets.dll
+        Set-Project SCPBlock "SCPBlock.sln"
+        Update-Package
       shell: pwsh
 
     - name: Test
