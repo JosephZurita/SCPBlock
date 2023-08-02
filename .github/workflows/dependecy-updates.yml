@@ -32,7 +32,7 @@ jobs:
         dotnet restore
         dotnet list package
         dotnet add package EXILED -v 7.2.0 -n
-        dotnet restore --force --force-evaluate
+        dotnet restore --force --force-evaluate --no-cache
         dotnet list package
         dotnet list reference
       shell: bash
