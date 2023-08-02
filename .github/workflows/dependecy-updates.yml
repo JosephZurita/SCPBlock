@@ -29,8 +29,7 @@ jobs:
     - name: Update
       id: update
       run: |
-        Install-PackageProvider -Name NuGet
-        Install-Package EXILED
+        Find-PackageProvider -Name "Nuget" | Install-PackageProvider -Verbose
       shell: pwsh
 
     - name: Test
