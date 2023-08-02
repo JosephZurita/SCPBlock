@@ -46,7 +46,7 @@ jobs:
     - name: Test
       id: test
       if: ${{ steps.update.outputs.pkgupdated == 'true' }}
-      run: msbuild SCPBlock.sln -t:rebuild -p:Configuration=Release -p:Runtimeidentifier=win-x64
+      run: msbuild SCPBlock.sln -t:rebuild -p:Configuration=Release;RuntimeIdentifier=win-x64
 
     - name: Push
       id: push
