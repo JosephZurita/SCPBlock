@@ -33,14 +33,15 @@ jobs:
     - name: Update
       id: update
       run: |
-        dotnet add package EXILED
+        dotnet add package EXILED -n
+        dotnet list package
       shell: bash
 
     - name: Test
       id: test
       run: |
-        msbuild SCPBlock.sln -r
         msbuild SCPBlock.sln -t:clean -p:Configuration=Release
+        msbuild SCPBlock.sln -r
         msbuild SCPBlock.sln -t:rebuild -p:Configuration=Release
 
     - name: Push
