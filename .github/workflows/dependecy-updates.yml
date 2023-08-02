@@ -30,7 +30,7 @@ jobs:
       id: update
       run: |
         Get-PackageSource
-        Install-Package -name EXILED -InstallUpdate -Force
+        Install-Package EXILED -ProviderName NuGet -Source https://www.nuget.org/api/v2 -Force
       shell: pwsh
 
     - name: Test
