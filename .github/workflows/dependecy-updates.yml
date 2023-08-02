@@ -29,7 +29,8 @@ jobs:
     - name: Update
       id: update
       run: |
-        Install-Package -name EXILED -InstallUpdate -Force
+        Install-PackageProvider -Name NuGet
+        Install-Package EXILED
       shell: pwsh
 
     - name: Test
