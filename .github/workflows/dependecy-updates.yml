@@ -32,12 +32,13 @@ jobs:
         dotnet restore
         dotnet list package
         dotnet add package EXILED -v 7.2.0
-        dotnet list package 
+        dotnet list package
+        dotnet list reference
       shell: bash
 
     - name: Test
       id: test
-      run: msbuild SCPBlock.sln -t:rebuild -p:Configuration=Release
+      run: msbuild SCPBlock.sln -r -t:rebuild -p:Configuration=Release
 
     - name: Push
       id: push
