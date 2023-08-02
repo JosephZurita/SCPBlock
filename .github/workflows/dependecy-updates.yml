@@ -33,10 +33,9 @@ jobs:
     - name: Update
       id: update
       run: |
-        Import-Module PackageManagement.Cmdlets.dll
-        Set-Project SCPBlock "SCPBlock.sln"
-        Update-Package
-      shell: pwsh
+        dotnet remove package EXILED
+        dotnet add package EXILED -v 7.2
+      shell: bash
 
     - name: Test
       id: test
