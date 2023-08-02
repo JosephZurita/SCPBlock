@@ -34,7 +34,6 @@ jobs:
       id: update
       run: |
         dotnet add package EXILED -n
-        dotnet list package
       shell: bash
 
     - name: Test
