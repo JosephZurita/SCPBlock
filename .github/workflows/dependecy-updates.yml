@@ -26,10 +26,6 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@main
 
-    - name: Tools
-      id: tools
-      run: dotnet tool install --global dotnet-outdated-tool
-
     - name: Update
       id: update
       run: |
@@ -38,10 +34,7 @@ jobs:
 
     - name: Test
       id: test
-      run: |
-        msbuild SCPBlock.sln -t:clean -p:Configuration=Release
-        msbuild SCPBlock.sln -r
-        msbuild SCPBlock.sln -t:rebuild -p:Configuration=Release
+      run: msbuild SCPBlock.sln -t:rebuild -p:Configuration=Release
 
     - name: Push
       id: push
