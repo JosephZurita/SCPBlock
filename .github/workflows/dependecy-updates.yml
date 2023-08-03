@@ -34,7 +34,7 @@ jobs:
         dotnet restore
         $outJson = dotnet list package --outdated --format json | ConvertFrom-Json
         $outJson = $outJson.projects[0]
-        if (($outJson.PSobject.Properties.name -contains "frameworks") eq $false) { return }
+        if (($outJson.PSobject.Properties.name -contains "frameworks") -eq $false) { return }
         echo "pkgupdated=true" >> "$GITHUB_OUTPUT"
         echo "got here"
         $jsonPack = $outJson.frameworks[0].topLevelPackages
