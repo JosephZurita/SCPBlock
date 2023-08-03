@@ -31,10 +31,10 @@ jobs:
     - name: modifycsproj
       id: mod
       run: |
-        choco install xmlstarlet
-        xml sel -c "/Project/ItemGroup/PackageReference[@Include = 'EXILED']"
-        xml ed --inplace -u "/Project/ItemGroup/PackageReference[@Include = 'EXILED']/@Version" -v "7.2.0" SCPBlock.csproj
-        xml el SCPBlock.csproj
+        $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
+        $node = $xmlDoc.SelectSingleNode("//PackageReference[@Include='Exiled']")
+        $node.SetAttribute("Version", "7.2.0")
+        $xmlDoc.Save("SCPBlock.csproj")
       shell: pwsh
 
     - name: Test
