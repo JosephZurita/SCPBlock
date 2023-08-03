@@ -32,7 +32,7 @@ jobs:
       id: mod
       run: |
         choco install xmlstarlet
-        xml ed --update "//PackageReference[@Include='EXILED']/@Version" --value "7.2.0" SCPBlock.csproj
+        xml ed -u "//PackageReference[@Include = 'EXILED']/@Version" -v "7.2.0" SCPBlock.csproj --inplace
       shell: pwsh
 
     - name: Test
