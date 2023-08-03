@@ -31,6 +31,7 @@ jobs:
     - name: Get Dependencies
       id: getdep
       run: |
+        dotnet restore
         $outJson = dotnet list package --outdated --format json
       shell: pwsh
       
