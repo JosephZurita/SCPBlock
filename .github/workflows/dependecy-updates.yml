@@ -37,7 +37,7 @@ jobs:
 
     - name: Test
       id: test
-      run: msbuild SCPBlock.sln -t:rebuild -p:Configuration=Release
+      run: msbuild -r SCPBlock.sln -t:rebuild -p:Configuration=Release
 
     - name: Push
       id: push
