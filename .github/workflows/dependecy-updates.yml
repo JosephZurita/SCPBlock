@@ -33,9 +33,11 @@ jobs:
       run: |
         dotnet restore
         $outJson = dotnet list package --outdated --format json | ConvertFrom-Json
-        if (!$outJson.projects[0].frameworks) { return }
+        $outJson = $outJson.projects[0]
+        echo $outJson
+        if (!($outJson.PSobject.Properties.name -contains "frameworks")) { return }
         echo "pkgupdated=true" >> "$GITHUB_OUTPUT"
-        $jsonPack = $outJson.projects[0].frameworks[0].topLevelPackages
+        $jsonPack = $outJson.frameworks[0].topLevelPackages
         $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
         $ns = New-Object System.Xml.XmlNamespaceManager($xmlDoc.NameTable)
         $ns.AddNamespace("ns", $xmlDoc.DocumentElement.NamespaceURI)
