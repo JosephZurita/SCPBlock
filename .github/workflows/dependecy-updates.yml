@@ -35,8 +35,9 @@ jobs:
         $outJson = dotnet list package --outdated --format json | ConvertFrom-Json
         $outJson = $outJson.projects[0]
         echo $outJson
-        echo $outJson.PSobject.Properties.name -contains "frameworks"
-        if (!($outJson.PSobject.Properties.name -contains "frameworks")) { return }
+        $outdated = $outJson.PSobject.Properties.name -contains "frameworks"
+        $outJson.PSobject.Properties.name -contains "frameworks"
+        if (!$outdated) { return }
         echo "pkgupdated=true" >> "$GITHUB_OUTPUT"
         $jsonPack = $outJson.frameworks[0].topLevelPackages
         $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
