@@ -32,7 +32,8 @@ jobs:
       id: getdep
       run: |
         dotnet restore
-        $outJson = dotnet list package --outdated --format json
+        $outJson = dotnet list package --outdated --format json | ConvertFrom-Json
+        echo $outJson.projects[0].frameworks[0].topLevelPackages
       shell: pwsh
       
     - name: modifycsproj
