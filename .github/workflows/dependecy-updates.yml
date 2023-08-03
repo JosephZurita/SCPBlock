@@ -31,8 +31,11 @@ jobs:
     - name: modifycsproj
       id: mod
       run: |
+        
         $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
-        $node = $xmlDoc.SelectSingleNode("//PackageReference[@Include='Exiled']")
+        $ns = New-Object System.Xml.XmlNamespaceManager($xmlDoc.NameTable)
+        $ns.AddNamespace("ns", $xmlDoc.DocumentElement.NamespaceURI)
+        $node = $xmlDoc.SelectSingleNode("//ns:PackageReference[@Include='Exiled']", $ns)
         $node.SetAttribute("Version", "7.2.0")
         $xmlDoc.Save("SCPBlock.csproj")
       shell: pwsh
