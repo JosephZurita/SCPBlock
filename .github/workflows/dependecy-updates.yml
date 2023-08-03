@@ -18,13 +18,15 @@ on:
 jobs:
   dependencies:
     name: Update Dependencies
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@main
     
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@main
+      with:
+        msbuild-architecture: x64
       
     - name: delete all @line attributes
       uses:  Mudlet/xmlstarlet-action@master
@@ -33,7 +35,7 @@ jobs:
 
     - name: Test
       id: test
-      run: msbuild SCPBlock.sln -r -t:rebuild -p:Configuration=Release
+      run: msbuild SCPBlock.sln -t:rebuild -p:Configuration=Release
 
     - name: Push
       id: push
