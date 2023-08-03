@@ -34,9 +34,9 @@ jobs:
         dotnet restore
         $outJson = dotnet list package --outdated --format json | ConvertFrom-Json
         $outJson = $outJson.projects[0]
-        $outdated = $outJson.PSobject.Properties.name -contains "frameworks"
+        $outdated = !($outJson.PSobject.Properties.name -contains "frameworks")
         echo $outdated
-        if (!($outdated)) { return }
+        if ($outdated) { return }
         echo "pkgupdated=true" >> "$GITHUB_OUTPUT"
         $jsonPack = $outJson.frameworks[0].topLevelPackages
         $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
