@@ -27,11 +27,16 @@ jobs:
       uses: microsoft/setup-msbuild@main
       with:
         msbuild-architecture: x64
+
+    - name: Get Dependencies
+      id: getdep
+      run: |
+        $outJson = dotnet list package --outdated --format json
+      shell: pwsh
       
     - name: modifycsproj
       id: mod
       run: |
-        
         $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
         $ns = New-Object System.Xml.XmlNamespaceManager($xmlDoc.NameTable)
         $ns.AddNamespace("ns", $xmlDoc.DocumentElement.NamespaceURI)
