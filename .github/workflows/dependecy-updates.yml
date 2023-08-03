@@ -33,12 +33,13 @@ jobs:
       run: |
         dotnet restore
         $outJson = dotnet list package --outdated --format json | ConvertFrom-Json
-        echo $outJson.projects[0].frameworks[0].topLevelPackages
+        echo "outJsonArray=$outJson.projects[0].frameworks[0].topLevelPackages" >> $GITHUB_OUTPUT
       shell: pwsh
       
     - name: modifycsproj
       id: mod
       run: |
+        echo "${{ steps.getdep.outputs.outJsonArray }}
         $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
         $ns = New-Object System.Xml.XmlNamespaceManager($xmlDoc.NameTable)
         $ns.AddNamespace("ns", $xmlDoc.DocumentElement.NamespaceURI)
