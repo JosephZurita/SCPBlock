@@ -39,7 +39,7 @@ jobs:
     - name: modifycsproj
       id: mod
       run: |
-        echo "${{ steps.getdep.outputs.outJsonArray }}
+        echo "${{ steps.getdep.outputs.outJsonArray }}"
         $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
         $ns = New-Object System.Xml.XmlNamespaceManager($xmlDoc.NameTable)
         $ns.AddNamespace("ns", $xmlDoc.DocumentElement.NamespaceURI)
