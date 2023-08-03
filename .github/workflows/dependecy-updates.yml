@@ -41,7 +41,8 @@ jobs:
           echo $pack.id
           echo $pack.latestVersion
           $xmlPath = "//ns:PackageReference[@Include='" + $pack.id + "']"
-          echo $xmlPath
+          $node = $xmlDoc.SelectSingleNode($xmlPath, $ns)
+          $node.SetAttribute("Version", $pack.latestVersion)
         }
         $xmlDoc.Save("SCPBlock.csproj")
       shell: pwsh
