@@ -18,7 +18,7 @@ on:
 jobs:
   dependencies:
     name: Update Dependencies
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@main
@@ -28,10 +28,12 @@ jobs:
       with:
         msbuild-architecture: x64
       
-    - name: delete all @line attributes
-      uses:  Mudlet/xmlstarlet-action@master
-      with:
-        args: ed --update "//PackageReference[@Include='EXILED']/@Version" --value "7.2.0" SCPBlock.csproj
+    - name: modifycsproj
+      id: mod
+      run: |
+        choco install xmlstarlet
+        xml ed update "//PackageReference[@Include='EXILED']/@Version" --value "7.2.0" SCPBlock.csproj
+      shell: pwsh
 
     - name: Test
       id: test
