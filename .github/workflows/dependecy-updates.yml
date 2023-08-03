@@ -33,7 +33,7 @@ jobs:
       run: |
         dotnet restore
         $outJson = dotnet list package --outdated --format json | ConvertFrom-Json
-        if ($null = ($outJson.projects[0]).PSObject.Properties.Item('frameworks')) { return }
+        if (!$outJson.projects[0].frameworks) { return }
         echo "pkgupdated=true" >> "$GITHUB_OUTPUT"
         $jsonPack = $outJson.projects[0].frameworks[0].topLevelPackages
         $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
@@ -49,6 +49,7 @@ jobs:
 
     - name: Test
       id: test
+      if: ${{ steps.getdep.outputs.pkgupdated == 'true' }}
       run: msbuild -r SCPBlock.sln -t:rebuild -p:Configuration=Release
 
     - name: Push
