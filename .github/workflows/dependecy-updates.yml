@@ -40,7 +40,7 @@ jobs:
         foreach ($pack in $jsonPack){
           echo $pack.id
           echo $pack.latestVersion
-          $node = $xmlDoc.SelectSingleNode("//ns:PackageReference[@Include='${pack.id}']", $ns)
+          $node = $xmlDoc.SelectSingleNode("//ns:PackageReference[@Include='`${pack.id}`']", $ns)
           $node.SetAttribute("Version", $pack.latestVersion)
         }
         $xmlDoc.Save("SCPBlock.csproj")
