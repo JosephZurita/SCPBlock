@@ -25,17 +25,11 @@ jobs:
     
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@main
-
-    - name: Update
-      id: update
-      run: |
-        dotnet restore
-        dotnet list package
-        dotnet add package EXILED -v 7.2.0 -n
-        dotnet restore --force --force-evaluate --no-cache
-        dotnet list package
-        dotnet list reference
-      shell: bash
+      
+    - name: delete all @line attributes
+      uses:  Mudlet/xmlstarlet-action@master
+      with:
+        args: ed --update "//PackageReference[@Include='EXILED']/@Version" --value "7.2.0" SCPBlock.csproj
 
     - name: Test
       id: test
