@@ -34,6 +34,7 @@ jobs:
         dotnet restore
         $outJson = dotnet list package --outdated --format json | ConvertFrom-Json
         $jsonString = $outJson.projects[0].frameworks[0].topLevelPackages | ConvertTo-Json
+        echo $jsonString
         echo "jsonArray=$jsonString" >> $GITHUB_OUTPUT
       shell: pwsh
       
