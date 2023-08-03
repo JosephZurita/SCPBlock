@@ -40,7 +40,7 @@ jobs:
         foreach ($pack in $jsonPack){
           echo $pack.id
           echo $pack.latestVersion
-          echo "//ns:PackageReference[@Include='`${pack.id}`']"
+          echo "//ns:PackageReference[@Include='""${pack.id}""']"
           $node = $xmlDoc.SelectSingleNode("//ns:PackageReference[@Include='`${pack.id}`']", $ns)
           $node.SetAttribute("Version", $pack.latestVersion)
         }
