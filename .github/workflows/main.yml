@@ -24,4 +24,6 @@ jobs:
       shell: pwsh
 
     - name: Build solution
+      env:
+            EXILED_REFERENCES: ${{ env.EXILED_REFERENCES_PATH }}
       run: msbuild -r SCPBlock.sln -t:rebuild -property:Configuration=Release
