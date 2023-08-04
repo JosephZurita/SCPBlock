@@ -19,6 +19,7 @@ jobs:
       
     - name: Get references
       run: |
+          dotnet restore
           Invoke-WebRequest -Uri ${{ env.EXILED_REFERENCES_URL }} -OutFile ${{ github.workspace }}/References.zip
           Expand-Archive -Path References.zip -DestinationPath ${{ env.EXILED_REFERENCES_PATH }}
       shell: pwsh
