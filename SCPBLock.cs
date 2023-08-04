@@ -1,14 +1,16 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Features.Roles;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
-
 using System;
-
-using Player = Exiled.Events.Handlers.Player;
+using System.Collections.Generic;
+using System.Linq;
+using Players = Exiled.Events.Handlers.Player;
 
 namespace SCPBlock
 {
+    /// <inheritdoc />
     public class SCPBlock : Plugin<Config>
     {
         /// <inheritdoc />
@@ -29,20 +31,26 @@ namespace SCPBlock
         /// <inheritdoc/>
         public override void OnEnabled()
         {
-            Player.ChangingRole += OnChangingRole;
+            Players.ChangingRole += OnChangingRole;
             base.OnEnabled();
         }
 
+        /// <inheritdoc />
         public override void OnDisabled()
         {
-            Player.ChangingRole -= OnChangingRole;
+            Players.ChangingRole -= OnChangingRole;
             base.OnDisabled();
         }
 
         public void OnChangingRole(ChangingRoleEventArgs ev)
         {
             if (!ev.IsAllowed || ev.Reason == SpawnReason.ForceClass || !Config.blockList.Contains(ev.NewRole) ) return;
-            ev.NewRole = Config.swapList.RandomItem<RoleTypeId>();
+
+            RoleTypeId? newSCP = Config.swapList.Except((IEnumerable<RoleTypeId>)Player.Get(Team.SCPs).Select(scp => scp.Role)).ToList().RandomItem();
+
+            if (newSCP == null) return;
+
+            ev.NewRole = (RoleTypeId)newSCP;
         }
     }
 }

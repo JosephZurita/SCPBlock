@@ -1,9 +1,6 @@
-﻿using Exiled.API.Features.Roles;
-using Exiled.API.Interfaces;
+﻿using Exiled.API.Interfaces;
 using PlayerRoles;
-using PluginAPI.Roles;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,28 +8,29 @@ using System.Linq;
 namespace SCPBlock
 {
 
-    /// <inheritdoc cref="IConfig"/>
     public sealed class Config : IConfig
     {
 
         private static List<RoleTypeId> defBlocked = new() { RoleTypeId.Scp079 };
 
         /// <inheritdoc/>
+        [Description("Is the plugin enabled?")]
         public bool IsEnabled { get; set; } = true;
-
-        /// <inheritdoc />
+        
+        /// <inheritdoc/>
+        [Description("Should debug messages be displayed?")]
         public bool Debug { get; set; }
 
         /// <summary>
-        /// Gets the list of ints config.
+        /// List of SCPs which should be respawned as another as defined in swapList
         /// </summary>
         [Description("List of blocked SCPs")]
         public List<RoleTypeId> blockList { get; private set; } = new(defBlocked);
 
         /// <summary>
-        /// Gets the list of ints config.
+        /// List of SCPs which to be respawned as a replacement
         /// </summary>
-        [Description("List of blocked SCPs")]
+        [Description("List of SCPs to swap to")]
         public List<RoleTypeId> swapList { get; private set; } = new(Enum.GetValues(typeof(RoleTypeId)).Cast<RoleTypeId>().Where(rt => rt.GetTeam() == Team.SCPs && !defBlocked.Contains(rt)));
 
     }
