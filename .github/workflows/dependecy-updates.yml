@@ -25,32 +25,37 @@ jobs:
     
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@main
+      with:
+        msbuild-architecture: x64
 
-    - name: Tools
-      id: tools
-      run: dotnet tool install --global dotnet-outdated-tool
-
-    - name: Update
-      id: update
+    - name: Get Dependencies
+      id: getdep
       run: |
-        OUTPUT=$(dotnet outdated)
-        if [[ $OUTPUT =~ "No outdated dependencies were detected" ]]; then
-            echo "name=updated::false" >> $GITHUB_OUTPUT
-        else
-            dotnet outdated -u
-        
-            echo "name=updated::true" >> $GITHUB_OUTPUT
-        fi
-      shell: bash
+        dotnet restore
+        $outJson = dotnet list package --outdated --format json | ConvertFrom-Json
+        $outJson = $outJson.projects[0]
+        if (($outJson.PSobject.Properties.name -contains "frameworks") -eq $false) { return }
+        echo "pkgupdated=true" >> $env:GITHUB_OUTPUT
+        $jsonPack = $outJson.frameworks[0].topLevelPackages
+        $xmlDoc = [xml](Get-Content -Path SCPBlock.csproj)
+        $ns = New-Object System.Xml.XmlNamespaceManager($xmlDoc.NameTable)
+        $ns.AddNamespace("ns", $xmlDoc.DocumentElement.NamespaceURI)
+        foreach ($pack in $jsonPack){
+          $xmlPath = "//ns:PackageReference[@Include='" + $pack.id + "']"
+          $node = $xmlDoc.SelectSingleNode($xmlPath, $ns)
+          $node.SetAttribute("Version", $pack.latestVersion)
+        }
+        $xmlDoc.Save("SCPBlock.csproj")
+      shell: pwsh
 
     - name: Test
       id: test
-      if: ${{ env.updated == 'true' }}
-      run: msbuild SCPBlock.sln -t:rebuild -property:Configuration=Release
+      if: ${{ steps.getdep.outputs.pkgupdated == 'true' }}
+      run: msbuild -r SCPBlock.sln -t:rebuild -p:Configuration=Release
 
     - name: Push
       id: push
-      if: ${{ env.updated == 'true' }}
+      if: ${{ steps.getdep.outputs.pkgupdated == 'true' }}
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Automated Dependency Updates
