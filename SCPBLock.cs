@@ -1,6 +1,5 @@
 ﻿using Exiled.API.Enums;
 using Exiled.API.Features;
-using Exiled.API.Features.Roles;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
 using System;
@@ -46,11 +45,12 @@ namespace SCPBlock
         {
             if (!ev.IsAllowed || ev.Reason == SpawnReason.ForceClass || !Config.blockList.Contains(ev.NewRole) ) return;
 
-            RoleTypeId? newSCP = Config.swapList.Except((IEnumerable<RoleTypeId>)Player.Get(Team.SCPs).Select(scp => scp.Role)).ToList().RandomItem();
+            List<RoleTypeId> swapScps = Config.swapList.Except(Player.Get(Team.SCPs).Select(scp => (RoleTypeId)scp.Role)).ToList();
 
-            if (newSCP == null) return;
+            if (swapScps.Count == 0) return;
 
-            ev.NewRole = (RoleTypeId)newSCP;
+            ev.SpawnFlags = RoleSpawnFlags.UseSpawnpoint;
+            ev.NewRole = swapScps.RandomItem();
         }
     }
 }
